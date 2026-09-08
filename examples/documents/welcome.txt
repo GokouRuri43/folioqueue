@@ -1,0 +1,4 @@
+FolioQueue example collection
+
+These documents are synthetic and released under the repository's MIT license.
+Run the conversion twice: the second run should skip unchanged files.

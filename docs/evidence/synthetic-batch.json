@@ -1,0 +1,48 @@
+{
+  "executed_at": "2026-09-08T06:39:31.915120+00:00",
+  "platform": "Windows",
+  "python": "3.12.14",
+  "folioqueue": "0.1.0",
+  "markitdown": "0.1.7",
+  "workers": 2,
+  "corpus": {
+    "txt": 40,
+    "csv": 10,
+    "docx": 2,
+    "pdf": 2,
+    "html": 2
+  },
+  "runs": [
+    {
+      "scenario": "initial",
+      "summary": {
+        "converted": 56
+      },
+      "duration_seconds": 4.031
+    },
+    {
+      "scenario": "unchanged",
+      "summary": {
+        "skipped": 56
+      },
+      "duration_seconds": 0.219
+    },
+    {
+      "scenario": "one_source_changed",
+      "summary": {
+        "converted": 1,
+        "skipped": 55
+      },
+      "duration_seconds": 0.25
+    },
+    {
+      "scenario": "one_output_edited",
+      "summary": {
+        "failed": 1,
+        "skipped": 55
+      },
+      "duration_seconds": 0.203
+    }
+  ],
+  "limitations": "Small synthetic smoke corpus; not an extraction-quality or comparative throughput benchmark."
+}

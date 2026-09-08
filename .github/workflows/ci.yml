@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.11'
+          - os: windows-latest
+            python: '3.12'
+          - os: macos-latest
+            python: '3.13'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install -e ".[test,documents]"
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python -m pytest --cov=folioqueue --cov-report=term-missing --junitxml=test-results.xml
+      - name: Exercise documented CLI
+        run: |
+          python -m folioqueue plan examples/documents -o demo-output --json
+          python -m folioqueue convert examples/documents -o demo-output
+          python -m folioqueue convert examples/documents -o demo-output
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.os }}
+          path: |
+            test-results.xml
+            demo-output/report.json
+            demo-output/report.html
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - name: Install wheel in a clean environment (dependency-free core)
+        run: |
+          python -m venv /tmp/fq-wheel
+          /tmp/fq-wheel/bin/python -m pip install --no-deps dist/*.whl
+          cd /tmp
+          /tmp/fq-wheel/bin/python -m folioqueue --version
+          /tmp/fq-wheel/bin/python -m folioqueue convert "$GITHUB_WORKSPACE/examples/documents" -o /tmp/fq-smoke
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: dist/*

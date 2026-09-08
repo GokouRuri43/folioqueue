@@ -1,0 +1,24 @@
+# Selection research — 2026-09-08
+
+The following are public demand signals, not customer endorsements and not independently reproduced upstream bug findings.
+
+## Upstream signals
+
+- [MarkItDown #135](https://github.com/microsoft/markitdown/issues/135), “Support for Parallel Processing of files”: a request and discussion around document-processing throughput. Some comments make unsupported general claims about Python parallelism; FolioQueue does not adopt those claims. A bounded one-file process model is used for failure isolation and scheduling, without a speedup promise.
+- [MarkItDown #1234](https://github.com/microsoft/markitdown/issues/1234), “Magika Dependency Optional”: a browser/Pyodide use case affected by ONNX dependencies. FolioQueue does **not** solve that upstream browser issue; it keeps its own text/CSV core dependency-free and makes the complete document backend optional.
+- The upstream single-file CLI was inspected at commit [`b6e8bbdce628d564c6af031b5f26cda6e818ea10`](https://github.com/microsoft/markitdown/tree/b6e8bbdce628d564c6af031b5f26cda6e818ea10). FolioQueue implements a separate collection workflow using the published Python package, without copying upstream implementation code.
+
+## Related projects inspected
+
+- [MarkItDown Plus](https://github.com/lamguo/markitdown-plus): folder conversion, workers, manifests, assets, RAG chunking and JSONL. Stronger choice when chunking and assets are central. Its README was reviewed; no claim is made that it lacks an unmentioned capability.
+- [kuma90/markitdown-batch](https://github.com/kuma90/markitdown-batch): Windows GUI/CLI for folder conversion through a LAN API.
+- [shubhankarreddy/markitdown-gui](https://github.com/shubhankarreddy/markitdown-gui): Windows desktop conversion workflow, discovered through repository metadata.
+
+FolioQueue's v0.1 contract focuses on checksum-based resume, conservative output ownership, write-ahead recovery, per-file timeout isolation and read-only planning. These are concrete behaviors to test, not a claim of uniqueness or superiority. There is substantial overlap with existing batch tools.
+
+## Validation still needed
+
+- Have external users install and run it against representative, non-sensitive collections.
+- Identify workflows where checkpointing and output-conflict detection materially help.
+- Measure overhead against a simple sequential MarkItDown loop using the same corpus, backend version and hardware. No throughput advantage is claimed until such a benchmark is published.
+- Turn real failure reports into minimal fixtures and fixes. Do not generate fake adoption statistics or upstream endorsements.

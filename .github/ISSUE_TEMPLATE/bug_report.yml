@@ -1,0 +1,31 @@
+name: Bug report
+description: Report a reproducible conversion or workflow problem.
+body:
+  - type: markdown
+    attributes:
+      value: "Use synthetic or non-sensitive examples only. Do not upload the private ledger or customer documents."
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python, FolioQueue and MarkItDown versions.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Command, selected flags and a minimal safe example.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: input
+    id: code
+    attributes:
+      label: Report error code
+      placeholder: output_conflict, timeout, conversion_error, ...
