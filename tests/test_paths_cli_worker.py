@@ -1,6 +1,5 @@
 import dataclasses
 import json
-import os
 
 import pytest
 
@@ -52,10 +51,11 @@ def test_symlinks_do_not_escape(collection, tmp_path):
         roots(source, output)
 
 
-@pytest.mark.skipif(os.name == "nt", reason="Case collision needs a case-sensitive filesystem")
 def test_case_collision(collection):
     source, _ = collection
     (source / "A.txt").write_text("A")
+    if (source / "a.txt").exists():
+        pytest.skip("Case collision needs a case-sensitive filesystem")
     (source / "a.txt").write_text("a")
     with pytest.raises(QueueError, match="collide"):
         scan(source, {".txt"})
