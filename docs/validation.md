@@ -47,6 +47,10 @@ Times are observations on this machine with a tiny generated corpus. They are no
 - `python -m twine check dist/*`: wheel and source archive metadata passed. Core metadata is explicitly set to 2.4 for validator compatibility.
 - Wheel installed with `--no-deps` into a clean Windows virtual environment containing only FolioQueue and pip. `python -m folioqueue --version` and conversion of the included examples passed from outside the source package directory.
 - Cross-platform results are provided by the linked Actions workflow; see the exact commit and job status rather than inferring a passing run from the presence of CI configuration.
+- Release commit `22ac669a9ad8e52cb614d8f0da9ee1cdb58cfbb9`: CI run [34196346416](https://github.com/GokouRuri43/folioqueue/actions/runs/34196346416) finished with all four jobs green (Windows/Python 3.12, Linux/Python 3.11, macOS/Python 3.13, packaging). The packaging job built the wheel and source archive, ran `twine check`, installed the wheel dependency-free into a clean environment, and ran a conversion smoke test.
+- Published as a prerelease: [v0.1.0](https://github.com/GokouRuri43/folioqueue/releases/tag/v0.1.0), with `folioqueue-0.1.0-py3-none-any.whl`, `folioqueue-0.1.0.tar.gz` and `SHA256SUMS` attached. The release targets commit `22ac669a9ad8e52cb614d8f0da9ee1cdb58cfbb9`; downloaded artifact SHA-256 values match `SHA256SUMS`. The clean-wheel example ran twice: 3 converted / 1 ignored, then 3 skipped / 1 ignored.
+
+The package is distributed through GitHub Releases only; it is not published to PyPI.
 
 ## Practical limits
 
