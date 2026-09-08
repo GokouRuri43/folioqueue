@@ -89,12 +89,18 @@ def scan(source: Path, extensions: set[str]) -> tuple[list[Path], list[dict]]:
             else:
                 files.append(path)
     seen: set[str] = set()
+    output_names: set[str] = set()
     for path in files:
         relative = path.relative_to(source).as_posix()
         key = unicodedata.normalize("NFC", relative).casefold()
         if key in seen:
             raise QueueError("Source paths collide under case-insensitive Unicode normalization.")
         seen.add(key)
+        output_names.add(key + ".md")
         # Reject names that cannot be safely represented by the ledger on all platforms.
         destination(Path("output"), relative)
+    for name in output_names:
+        parts = name.split("/")
+        if any("/".join(parts[:index]) in output_names for index in range(1, len(parts))):
+            raise QueueError("An output file would collide with another output's parent directory.")
     return sorted(files, key=lambda p: p.relative_to(source).as_posix()), ignored

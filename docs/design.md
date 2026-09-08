@@ -36,7 +36,7 @@ Atomic replacement is per file. The whole batch is not a transaction, and the tw
 
 ## Output ownership
 
-Only checksummed output tracked by the ledger is replaced. Names retain source extensions. Source names that collide under NFC normalization and case folding are rejected before conversion for portability. Reports and the private metadata directory are reserved generated paths. Stale outputs are retained, never automatically deleted.
+Only checksummed output tracked by the ledger is replaced. Names retain source extensions. Source names that collide under NFC normalization and case folding are rejected before conversion for portability. Output file/directory conflicts (for example, a source `a.txt` next to an `a.txt.md/` directory) are also rejected before conversion. Reports and the private metadata directory are reserved generated paths. Stale outputs are retained, never automatically deleted.
 
 The output directory is an application-managed workspace; do not edit reports or the ledger. Source documents and handwritten Markdown should live elsewhere. An output file edited concurrently after the final ownership check is outside the cooperative-writer model; do not edit output during an active run.
 

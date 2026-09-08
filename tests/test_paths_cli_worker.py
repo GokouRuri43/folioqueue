@@ -27,6 +27,16 @@ def test_overlapping_and_invalid_roots(collection):
         roots(source / "missing", output)
 
 
+def test_output_file_directory_collision_rejected_before_conversion(options):
+    (options.source / "a.txt").write_text("file", encoding="utf-8")
+    nested = options.source / "a.txt.md"
+    nested.mkdir()
+    (nested / "b.txt").write_text("nested", encoding="utf-8")
+    with pytest.raises(QueueError, match="parent directory"):
+        run(options)
+    assert not (options.output / "documents").exists()
+
+
 def test_hidden_and_unsupported_are_reported(options):
     (options.source / ".private.txt").write_text("secret", encoding="utf-8")
     (options.source / ".git").mkdir()
