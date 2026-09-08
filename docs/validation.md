@@ -42,6 +42,23 @@ Run `python scripts/validate_release.py --output docs/evidence` from the install
 
 Times are observations on this machine with a tiny generated corpus. They are not a comparative throughput benchmark or a prediction for real PDFs.
 
+## Public-document corpus check — 2026-09-08
+
+Two rounds were run against real, publicly available documents downloaded for local validation. The files are not committed to this repository.
+
+Round 1 — PDFs (15 files) from the [Mozilla pdf.js test corpus](https://github.com/mozilla/pdf.js/tree/master/test/pdfs): 13 converted, 2 failed, both isolated without a batch crash.
+- Converted: real-world forms, CJK fonts (XiaoBiaoSong, SimFang variant), Arabic CID fonts, embedded fonts, AcroForm, Type3 fonts, transparency and shading.
+- `GHOSTSCRIPT-698804-1-fuzzed.pdf` → `empty_output` (fuzzed file with no text layer).
+- `PDFBOX-4352-0.pdf` → `conversion_error` (upstream pdfminer raises `PDFEncryptionError: Unknown filter: param={}`).
+
+Round 2 — DOCX / HTML / TXT (13 files): 12 converted, 1 failed.
+- DOCX from [python-docx test fixtures](https://github.com/python-openxml/python-docx) (tables, comments, headers/footers, hyperlinks, page breaks, numbering, styles): 8 of 9 converted; `doc-default.docx` → `empty_output` (a blank default Word document with no text).
+- HTML from live pages (Wikipedia Markdown in English and Chinese, PEP 8) and TXT from [Project Gutenberg](https://www.gutenberg.org/) (The Adventures of Sherlock Holmes, public domain): all converted.
+
+License note: the pdf.js repository is Apache-2.0 but individual test PDFs have heterogeneous origins; python-docx is MIT; the Gutenberg text is public domain; Wikipedia pages are CC BY-SA. Attribution and redistribution would need per-file review before any of these could become bundled fixtures.
+
+These are real, publicly available documents rather than generated fixtures, but they are still a curated sample and not a substitute for a specific user's own document collection.
+
 ## CI and installation
 
 - `python -m twine check dist/*`: wheel and source archive metadata passed. Core metadata is explicitly set to 2.4 for validator compatibility.
