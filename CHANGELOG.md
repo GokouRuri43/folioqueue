@@ -11,4 +11,4 @@ Initial alpha release.
 - Read-only plan command, JSON/HTML reports and stable exit codes.
 - Synthetic regression fixtures, cross-platform CI and English/Chinese documentation.
 
-Known limits: no OCR, no packaged desktop app, no established external adoption, no throughput claims, no hostile-document sandbox. See the README and validation record.
+Known limits: no OCR, no packaged desktop app, no hostile-document sandbox. See the README and validation record.

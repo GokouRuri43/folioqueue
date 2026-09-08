@@ -54,4 +54,4 @@ The package is distributed through GitHub Releases only; it is not published to 
 
 ## Practical limits
 
-No external adoption is established. No performance comparison, full Unicode/filesystem portability audit, long-running soak, power-loss simulation, hostile parser sandbox audit, scanned-document OCR evaluation or complex-table fidelity evaluation has been completed.
+Not yet covered: performance comparison, full Unicode/filesystem portability audit, long-running soak, power-loss simulation, hostile parser sandbox audit, scanned-document OCR evaluation and complex-table fidelity evaluation.

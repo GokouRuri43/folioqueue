@@ -10,7 +10,7 @@
 
 FolioQueue helps maintain a Markdown copy of a **local document collection**. It snapshots each input, converts files in separate processes, checkpoints completed work, and checks both source and output hashes before skipping an unchanged file. A broken document can fail while the rest of the batch finishes.
 
-**Status: 0.1.0 alpha.** This is a new project. It does not have established adoption or a production reliability claim. See the validation record for what has actually been tested.
+**Status: 0.1.0 alpha.** See the validation record for what has actually been tested.
 
 ## Who is this for?
 
@@ -138,4 +138,4 @@ The test suite includes synthetic, redistributable PDF/DOCX/HTML fixtures and ac
 2. Publish larger, redistributable corpus results and measure overhead, failure behavior and memory use.
 3. Consider an explicit stale-output review command and portable ledger migration after the core behavior is exercised.
 
-Requests for unsupported features belong in issues with a concrete workflow and a minimal non-sensitive sample. No telemetry is collected by FolioQueue. No adoption, performance or selection claims are inferred from AI-generated code.
+Requests for unsupported features belong in issues with a concrete workflow and a minimal non-sensitive sample. No telemetry is collected by FolioQueue.

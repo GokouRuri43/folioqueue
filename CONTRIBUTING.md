@@ -25,7 +25,7 @@ Keep changes focused, describe the problem and final behavior, and include valid
 
 ## AI-assisted contributions
 
-AI assistance is welcome. The contributor is responsible for understanding the change, verifying behavior, checking attribution, and disclosing material limitations. Do not fabricate test runs, user feedback, benchmark results or maintainer endorsements. Initial development of this repository was assisted by Codex.
+AI assistance is welcome. The contributor is responsible for understanding the change, verifying behavior and checking attribution.
 
 ## Maintenance
 

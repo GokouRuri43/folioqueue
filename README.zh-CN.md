@@ -6,7 +6,7 @@
 
 适合维护本地文档集合和知识库：文件变化后重新转换，未变化的文件跳过，失败文件下次重试。PDF、DOCX、HTML 的底层提取使用 Microsoft MarkItDown；TXT、Markdown、CSV 使用 Python 标准库。
 
-**当前为 0.1.0 alpha。** 项目刚开始，没有成熟用户规模或生产可靠性承诺。它是独立的工作流工具，与 Microsoft、OpenAI 没有隶属关系。
+**当前为 0.1.0 alpha。** 它是独立的工作流工具，与 Microsoft、OpenAI 没有隶属关系。
 
 ## 适用人群
 
@@ -67,4 +67,4 @@ folioqueue convert ./documents -o ./out --force --json
 
 独立进程用于隔离普通故障，**不是安全沙箱**。处理不可信文件需要额外沙箱；大小检查也不是操作系统级内存限制。详见 [安全边界](SECURITY.md)。
 
-欢迎提交可复现问题和脱敏样例。AI 辅助开发记录不等于真实用户反馈；项目的使用效果需要实际使用来验证。
+欢迎提交可复现问题和脱敏样例。
