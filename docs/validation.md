@@ -49,11 +49,15 @@ Two rounds were run against real, publicly available documents downloaded for lo
 Round 1 — PDFs (15 files) from the [Mozilla pdf.js test corpus](https://github.com/mozilla/pdf.js/tree/master/test/pdfs): 13 converted, 2 failed, both isolated without a batch crash.
 - Converted: real-world forms, CJK fonts (XiaoBiaoSong, SimFang variant), Arabic CID fonts, embedded fonts, AcroForm, Type3 fonts, transparency and shading.
 - `GHOSTSCRIPT-698804-1-fuzzed.pdf` → `empty_output` (fuzzed file with no text layer).
-- `PDFBOX-4352-0.pdf` → `conversion_error` (upstream pdfminer raises `PDFEncryptionError: Unknown filter: param={}`).
+- `PDFBOX-4352-0.pdf` → `conversion_error` (the file carries an `/Encrypt` dictionary; pdfminer raises `PDFEncryptionError: Unknown filter: param={}`). Encrypted PDFs are outside the v0.1 scope, so this is an expected, isolated failure rather than a FolioQueue defect.
 
-Round 2 — DOCX / HTML / TXT (13 files): 12 converted, 1 failed.
-- DOCX from [python-docx test fixtures](https://github.com/python-openxml/python-docx) (tables, comments, headers/footers, hyperlinks, page breaks, numbering, styles): 8 of 9 converted; `doc-default.docx` → `empty_output` (a blank default Word document with no text).
+Round 2 — DOCX / HTML / TXT (25 files): 23 converted, 2 failed.
+- DOCX from [python-docx test fixtures](https://github.com/python-openxml/python-docx) (tables, comments, headers/footers, hyperlinks, page breaks, numbering, styles, tab stops, section content): 21 of 23 converted; `doc-default.docx` and `sty-having-no-styles-part.docx` → `empty_output` (fixtures whose body contains no text). Table structure and cell text are preserved in the converted Markdown.
 - HTML from live pages (Wikipedia Markdown in English and Chinese, PEP 8) and TXT from [Project Gutenberg](https://www.gutenberg.org/) (The Adventures of Sherlock Holmes, public domain): all converted.
+
+Conversion status vs extraction quality: a `converted` result means the backend returned non-empty text; it does not assert correctness. Two real examples where status and quality diverge (both upstream MarkItDown/pdfminer behavior, not FolioQueue logic):
+- `XiaoBiaoSong.pdf` (a CJK font without a proper ToUnicode CMap) converts but yields mojibake glyph codes instead of Chinese characters.
+- `ArabicCIDTrueType.pdf` converts but returns Arabic in visual order with presentation-form glyphs.
 
 License note: the pdf.js repository is Apache-2.0 but individual test PDFs have heterogeneous origins; python-docx is MIT; the Gutenberg text is public domain; Wikipedia pages are CC BY-SA. Attribution and redistribution would need per-file review before any of these could become bundled fixtures.
 
