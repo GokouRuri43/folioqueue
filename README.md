@@ -12,6 +12,12 @@ FolioQueue helps maintain a Markdown copy of a **local document collection**. It
 
 **Status: 0.1.0 alpha.** This is a new project. It does not have established adoption or a production reliability claim. See the validation record for what has actually been tested.
 
+## Who is this for?
+
+- **Note / knowledge-base maintainers** folding PDFs, Word and HTML into a Markdown vault, and keeping it in sync as sources change.
+- **Local RAG / LLM corpus builders** who need a reproducible, incremental Markdown mirror of a document folder to index.
+- **Self-hosted archive keepers** who want failures isolated per file and edited output protected, instead of a one-shot bulk convert.
+
 ## Why use it?
 
 - **Resume by rerunning.** Completed files are checkpointed individually; failed files are retried on the next run.
