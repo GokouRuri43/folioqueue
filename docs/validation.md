@@ -57,7 +57,7 @@ Round 2 — DOCX / HTML / TXT (45 files) from [python-docx test fixtures](https:
 
 Round 3 — DOCX (16 files) from [LibreOffice core ooxmlexport test data](https://github.com/LibreOffice/core/tree/master/sw/qa/extras/ooxmlexport/data): 13 converted, 3 failed.
 - `Encrypted_MSO2007_abc.docx` and `Encrypted_MSO2010_abc.docx` → `conversion_error` (real encrypted Word documents; out of scope, expected).
-- `090716_Studentische_Arbeit_VWS.docx` → `conversion_error` (upstream MarkItDown `DocxConverter` raises `IndexError: pop from empty list` on this real document; not found in upstream issues at the time of writing).
+- `090716_Studentische_Arbeit_VWS.docx` → `conversion_error` (upstream MarkItDown `DocxConverter` raises `IndexError: pop from empty list` on this real document; a known mammoth bug, [python-mammoth #168](https://github.com/mwilliamson/python-mammoth/issues/168), independently reproduced here and supplemented with a real-world document and a regression test).
 
 Conversion status vs extraction quality: a `converted` result means the backend returned non-empty text; it does not assert correctness. Two real examples where status and quality diverge (both upstream MarkItDown/pdfminer behavior, not FolioQueue logic):
 - `XiaoBiaoSong.pdf` (a CJK font without a proper ToUnicode CMap) converts but yields mojibake glyph codes instead of Chinese characters.
