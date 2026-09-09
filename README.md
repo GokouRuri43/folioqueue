@@ -35,12 +35,16 @@ This is an independently implemented workflow layer. PDF/DOCX/HTML extraction is
 Python 3.11 or later is required. Use a virtual environment. On Windows, the Python launcher may be `py` instead of `python`.
 
 ```bash
+python -m pip install "folioqueue[documents]"
+```
+
+`pip install folioqueue` installs the dependency-free TXT/Markdown/CSV core. The `documents` extra adds PDF, DOCX and HTML through MarkItDown. To install from source, clone the repository and run `python -m pip install ".[documents]"`:
+
+```bash
 git clone https://github.com/GokouRuri43/folioqueue.git
 cd folioqueue
 python -m pip install ".[documents]"
 ```
-
-`python -m pip install .` installs the dependency-free TXT/Markdown/CSV core. The `documents` extra adds PDF, DOCX and HTML through MarkItDown. A wheel and source archive are also provided in GitHub Releases; the project is **not currently published to PyPI**.
 
 ## Try it on the included examples
 

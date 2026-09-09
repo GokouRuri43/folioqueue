@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "folioqueue"
-version = "0.1.0"
+version = "0.1.1"
 description = "Restartable local document-to-Markdown batches with a checksum ledger and failure isolation"
 readme = "README.md"
 requires-python = ">=3.11"

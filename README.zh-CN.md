@@ -29,7 +29,7 @@ folioqueue convert examples/documents -o demo-output
 
 第一次转换三个示例文件并忽略一个不支持的文件；第二次应跳过三个未变化文件。打开 `demo-output/report.html` 查看结果。
 
-仅需要 TXT、Markdown、CSV 时，执行 `python -m pip install .`，核心没有第三方运行依赖。GitHub Releases 提供 wheel 和源码包；**目前没有发布到 PyPI**。
+仅需要 TXT、Markdown、CSV 时，执行 `pip install folioqueue`，核心没有第三方运行依赖。也可以从源码安装，GitHub Releases 同时提供 wheel 和源码包。
 
 转换自己的文件夹：
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-09-09
+
+- Published to PyPI as `folioqueue` with a trusted-publishing release workflow.
+- Documentation and validation record updates.
+
 ## 0.1.0 — 2026-09-08
 
 Initial alpha release.
