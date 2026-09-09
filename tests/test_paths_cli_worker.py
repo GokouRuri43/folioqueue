@@ -192,3 +192,54 @@ def test_generated_html_never_embeds_filename_markup(tmp_path):
     html = (tmp_path / "report.html").read_text(encoding="utf-8")
     assert "<script>" not in html
     assert "&lt;script&gt;" in html
+
+
+def test_python_m_entrypoint_runs_cli(options):
+    import subprocess
+    import sys
+
+    (options.source / "a.txt").write_text("hi", encoding="utf-8")
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "folioqueue",
+            "plan",
+            str(options.source),
+            "-o",
+            str(options.output),
+            "--json",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+
+
+def test_argument_validators_accept_valid_values():
+    from folioqueue.cli import positive, workers
+
+    assert positive("1.5") == 1.5
+    assert workers("16") == 16
+
+
+def test_plan_text_output(options, capsys):
+    (options.source / "a.txt").write_text("hi", encoding="utf-8")
+    assert main(["plan", str(options.source), "-o", str(options.output)]) == 0
+    out = capsys.readouterr().out
+    assert "Plan:" in out
+    assert "No files written" in out
+
+
+def test_csv_with_only_empty_rows(tmp_path):
+    file = tmp_path / "a.csv"
+    file.write_text("\n", encoding="utf-8")
+    assert convert(file, "utf-8") == ""
+
+
+def test_output_must_be_a_directory(collection, tmp_path):
+    source, _ = collection
+    file = tmp_path / "out.txt"
+    file.write_text("not a dir", encoding="utf-8")
+    with pytest.raises(QueueError, match="directory"):
+        roots(source, file)

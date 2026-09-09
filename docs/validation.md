@@ -20,7 +20,7 @@ Fixtures are small, synthetic and MIT-licensed. They establish regression behavi
 
 Windows, Python 3.12.14, MarkItDown 0.1.7, pytest 9.1.1:
 
-- `python -m pytest --cov=folioqueue --cov-report=term-missing`: **46 passed, 2 skipped**, 94% measured statement coverage, including worker subprocesses. The skips are local symlink creation privileges and a case-sensitive-filesystem test.
+- `python -m pytest --cov=folioqueue --cov-report=term-missing`: **51 passed, 2 skipped**, 96% measured statement coverage, including worker subprocesses. The skips are local symlink creation privileges and a case-sensitive-filesystem test.
 - `python -m ruff check .` and `python -m ruff format --check .`: passed.
 - `python -m build`: wheel and source archive built successfully.
 - Documented example: 3 converted / 1 ignored, then 3 skipped / 1 ignored.
