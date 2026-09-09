@@ -44,22 +44,26 @@ Times are observations on this machine with a tiny generated corpus. They are no
 
 ## Public-document corpus check — 2026-09-08
 
-Two rounds were run against real, publicly available documents downloaded for local validation. The files are not committed to this repository.
+Real, publicly available documents downloaded for local validation; not committed to this repository. 76 files across three rounds; every failure was isolated per file with no batch crash.
 
-Round 1 — PDFs (15 files) from the [Mozilla pdf.js test corpus](https://github.com/mozilla/pdf.js/tree/master/test/pdfs): 13 converted, 2 failed, both isolated without a batch crash.
+Round 1 — PDFs (15 files) from the [Mozilla pdf.js test corpus](https://github.com/mozilla/pdf.js/tree/master/test/pdfs): 13 converted, 2 failed.
 - Converted: real-world forms, CJK fonts (XiaoBiaoSong, SimFang variant), Arabic CID fonts, embedded fonts, AcroForm, Type3 fonts, transparency and shading.
 - `GHOSTSCRIPT-698804-1-fuzzed.pdf` → `empty_output` (fuzzed file with no text layer).
 - `PDFBOX-4352-0.pdf` → `conversion_error` (the file carries an `/Encrypt` dictionary; pdfminer raises `PDFEncryptionError: Unknown filter: param={}`). Encrypted PDFs are outside the v0.1 scope, so this is an expected, isolated failure rather than a FolioQueue defect.
 
-Round 2 — DOCX / HTML / TXT (25 files): 23 converted, 2 failed.
-- DOCX from [python-docx test fixtures](https://github.com/python-openxml/python-docx) (tables, comments, headers/footers, hyperlinks, page breaks, numbering, styles, tab stops, section content): 21 of 23 converted; `doc-default.docx` and `sty-having-no-styles-part.docx` → `empty_output` (fixtures whose body contains no text). Table structure and cell text are preserved in the converted Markdown.
-- HTML from live pages (Wikipedia Markdown in English and Chinese, PEP 8) and TXT from [Project Gutenberg](https://www.gutenberg.org/) (The Adventures of Sherlock Holmes, public domain): all converted.
+Round 2 — DOCX / HTML / TXT (45 files) from [python-docx test fixtures](https://github.com/python-openxml/python-docx), live pages and [Project Gutenberg](https://www.gutenberg.org/): 37 converted, 8 failed.
+- All 8 failures are `empty_output` on python-docx fixtures whose body contains no text (blank/default documents, core-properties-only, settings-only, styles-only). Table structure and cell text are preserved in the converted Markdown.
+- HTML from live pages (Wikipedia Markdown in English and Chinese, PEP 8) and TXT (The Adventures of Sherlock Holmes, public domain): all converted.
+
+Round 3 — DOCX (16 files) from [LibreOffice core ooxmlexport test data](https://github.com/LibreOffice/core/tree/master/sw/qa/extras/ooxmlexport/data): 13 converted, 3 failed.
+- `Encrypted_MSO2007_abc.docx` and `Encrypted_MSO2010_abc.docx` → `conversion_error` (real encrypted Word documents; out of scope, expected).
+- `090716_Studentische_Arbeit_VWS.docx` → `conversion_error` (upstream MarkItDown `DocxConverter` raises `IndexError: pop from empty list` on this real document; not found in upstream issues at the time of writing).
 
 Conversion status vs extraction quality: a `converted` result means the backend returned non-empty text; it does not assert correctness. Two real examples where status and quality diverge (both upstream MarkItDown/pdfminer behavior, not FolioQueue logic):
 - `XiaoBiaoSong.pdf` (a CJK font without a proper ToUnicode CMap) converts but yields mojibake glyph codes instead of Chinese characters.
 - `ArabicCIDTrueType.pdf` converts but returns Arabic in visual order with presentation-form glyphs.
 
-License note: the pdf.js repository is Apache-2.0 but individual test PDFs have heterogeneous origins; python-docx is MIT; the Gutenberg text is public domain; Wikipedia pages are CC BY-SA. Attribution and redistribution would need per-file review before any of these could become bundled fixtures.
+License note: the pdf.js repository is Apache-2.0 but individual test PDFs have heterogeneous origins; python-docx is MIT; LibreOffice core is MPL-2.0; the Gutenberg text is public domain; Wikipedia pages are CC BY-SA. Attribution and redistribution would need per-file review before any of these could become bundled fixtures.
 
 These are real, publicly available documents rather than generated fixtures, but they are still a curated sample and not a substitute for a specific user's own document collection.
 
